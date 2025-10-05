@@ -31,3 +31,8 @@ We will Choose Consistency over Availability since we have transactions. We will
 
 **Notification Service**: to notify users about live drops, stock, etc...
 <img width="979" height="531" alt="Screenshot 2025-10-05 at 11 54 26 AM" src="https://github.com/user-attachments/assets/1be94a7b-8a23-4d6e-a118-ee0dd242ac3d" />
+
+
+APIs contracts:
+
+<img width="850" height="633" alt="image" src="https://github.com/user-attachments/assets/1b72de1b-3042-4f4c-945c-a5882fbb147a" />
