@@ -36,3 +36,8 @@ We will Choose Consistency over Availability since we have transactions. We will
 APIs contracts:
 
 <img width="850" height="633" alt="image" src="https://github.com/user-attachments/assets/1b72de1b-3042-4f4c-945c-a5882fbb147a" />
+
+
+Tables:
+
+<img width="867" height="438" alt="image" src="https://github.com/user-attachments/assets/fd6a4a50-0793-41cc-9c77-15a4579c18c7" />
