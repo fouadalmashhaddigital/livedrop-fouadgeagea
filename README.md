@@ -19,17 +19,25 @@ We will Choose Consistency over Availability since we have transactions. We will
 
 .We need to have a payment Gateaway.
 
+.We will use Redis Cache to cache product listings, stock status, follower/following lists with a TTL and a manual invalidation to ensures data consistency.
+
 .Distributed Lock: lock in order to not let two clients buy the same product where one will get it and the other not, and a check on the database is needed. Also we can use Red-Lock where we lock the service until unlocking it in case of a horizontal scaling of two services available.
 
-**Order Service**: client hit the post order API, I have the status update in the order service that is a database, updates whatever hapenning and getting back to the user telling him that he purchased his product successfully. SQL Database for secured transactions with a rollback function.
+**Api Gateaway**: public endpoint for clients and it hanldes internal microservices with authentication, rate-limiting and idempotency checks.
+
+**Order Service**: client hit the post order API, I have the status update in the order service that is a database, updates whatever hapenning and getting back to the user telling him that he purchased his product successfully. SQL Database for secured transactions with a rollback function. Integretaed with a Payment Gateaway where it sends callbacks for successfull/failed payments to the order service. Order services Handles order creation with SQL DB, ensures stock never goes below zero. We will use Redlock to prevent race conditions and idempotency keys to prevent duplicate orders on retries.
 
 **Products Service**: client will communicate with the server to get the product details, database is storing the product details (S3ImageUrl, productId, name, description, price, stock,...) we will use Cloudflare (CDN) for caching and reducing cost purposes with a TTL and revalidates the caching data when the creator updates the product details or when its stock is 0 to remove the product from being listed as purchasable. Also scaling for the caching in order to prevent a full memory. Introduce Indexing is a good case also.
 
-**Authentication & Authorization Service**: for the user to enter his credentials, authorize him to purchase, follow/unfollow creators, etc... 
+**Authentication & Authorization Service**: for the user to enter his credentials, authorize him to purchase, follow/unfollow creators, etc... Issues JWT Tokens and OAuth tokens, ensuring only authorized users can place orders and follow/unfollow creators.
 
 **Followings Followers Service**: We introduce a seperate table for the followings and followers, we add indexing and we do hashing on the id and split into buckets. In this case we avoid data manipulation of huge arrays to know to following and followers and to check if user A follows creator B for example.
 
-**Notification Service**: to notify users about live drops, stock, etc...
+**Notification Service**: to notify users about live drops, stock, etc... We will use SSE to deliver real-time updates. system listes to events from Order Service, Products Service and notifies clients about drop start, low stock, sold out and order confirmation.
+
+
+
+
 <img width="979" height="531" alt="Screenshot 2025-10-05 at 11 54 26 AM" src="https://github.com/user-attachments/assets/1be94a7b-8a23-4d6e-a118-ee0dd242ac3d" />
 
 
