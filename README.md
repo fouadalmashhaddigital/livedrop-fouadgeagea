@@ -22,3 +22,4 @@ We will Choose Consistency over Availability since we have transactions. We will
 **Followings Followers Service**: We introduce a seperate table for the followings and followers, we add indexing and we do hashing on the id and split into buckets. In this case we avoid data manipulation of huge arrays to know to following and followers and to check if user A follows creator B for example.
 
 **Notification Service**: to notify users about live drops, stock, etc...
+<img width="979" height="531" alt="Screenshot 2025-10-05 at 11 54 26 AM" src="https://github.com/user-attachments/assets/1be94a7b-8a23-4d6e-a118-ee0dd242ac3d" />
